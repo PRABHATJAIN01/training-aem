@@ -1,0 +1,27 @@
+<div data-sly-use.hobbies="com.training.core.models.UserHobbies">
+
+	<form>
+          <label for="fname">First name:</label>
+          <input type="text" id="firstname" name="firstname"><br><br>
+
+          <label for="lname">Last name:</label>
+          <input type="text" id="lastname" name="lastname"><br><br>
+
+		  <label>Hobbies</label>
+
+          <div data-sly-list.hobbiesList="${hobbies.hobbiesList}">
+
+          <input type="checkbox" name="hobbies" id=${hobbiesList} value=${hobbiesList}>
+          <label for=${hobbiesList}> ${hobbiesList}</label><br>
+
+          </div>
+
+          <input type="submit" name="submit" id="submit" value="Submit">
+
+          <input type="button" name="getAllData" id="getAllData" value="Get All Data">
+
+    </form>
+
+               <div id="registration-data"></div>
+
+</div>
