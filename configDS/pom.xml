@@ -15,11 +15,16 @@
  |  limitations under the License.
 --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.training</groupId>
+    <parent>
     <artifactId>training</artifactId>
+    <groupId>com.training</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+    <groupId>configDS</groupId>
+    <artifactId>configDS</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <description>training</description>
+    <description>configDS</description>
 
     <modules>
         <module>core</module>
@@ -27,8 +32,7 @@
         <module>ui.content</module>
         <module>it.tests</module>
         <module>it.launcher</module>
-    <module>configDS</module>
-  </modules>
+    </modules>
 
     <properties>
         <aem.host>localhost</aem.host>
@@ -251,48 +255,34 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore/>
+                                        <ignore />
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
                                     <pluginExecutionFilter>
-                                        <groupId>
-                                            org.apache.maven.plugins
-                                        </groupId>
-                                        <artifactId>
-                                            maven-dependency-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [2.2,)
-                                        </versionRange>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-dependency-plugin</artifactId>
+                                        <versionRange>[2.2,)</versionRange>
                                         <goals>
                                             <goal>copy-dependencies</goal>
                                             <goal>unpack</goal>
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                         <ignore/>
+                                         <ignore />
                                     </action>
                                 </pluginExecution>
                                 <pluginExecution>
                                     <pluginExecutionFilter>
-                                        <groupId>
-                                            org.codehaus.mojo
-                                        </groupId>
-                                        <artifactId>
-                                            build-helper-maven-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [1.5,)
-                                        </versionRange>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>build-helper-maven-plugin</artifactId>
+                                        <versionRange>[1.5,)</versionRange>
                                         <goals>
-                                            <goal>
-                                                reserve-network-port
-                                            </goal>
+                                            <goal>reserve-network-port</goal>
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore/>
+                                        <ignore />
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -326,7 +316,6 @@
                     <name>Adobe Public Repository</name>
                     <url>https://repo.adobe.com/nexus/content/groups/public</url>
                     <releases>
-                        <enabled>true</enabled>
                         <updatePolicy>never</updatePolicy>
                     </releases>
                     <snapshots>
@@ -341,7 +330,6 @@
                     <name>Adobe Public Repository</name>
                     <url>https://repo.adobe.com/nexus/content/groups/public</url>
                     <releases>
-                        <enabled>true</enabled>
                         <updatePolicy>never</updatePolicy>
                     </releases>
                     <snapshots>
@@ -364,7 +352,6 @@
                 </plugin>
             -->
             <activation>
-                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <pluginManagement>
@@ -389,7 +376,6 @@
         <profile>
             <id>autoInstallPackage</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <pluginManagement>
@@ -417,7 +403,6 @@
         <profile>
             <id>autoInstallPackagePublish</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <pluginManagement>
@@ -450,6 +435,27 @@
     <!-- ====================================================================== -->
     <dependencyManagement>
         <dependencies>
+		
+		  <dependency>
+               <groupId>com.adobe.aem</groupId>
+               <artifactId>uber-jar</artifactId>
+               <version>6.3.0</version>
+               <!-- for AEM6.1 use this version     : <version>6.1.0</version> -->
+               <!-- for AEM6.1 SP1 use this version : <version>6.1.0-SP1-B0001</version> -->
+               <!-- for AEM6.1 SP2 use this version : <version>6.1.0-SP2</version> -->
+               <!-- for AEM6.2 use this version     : <version>6.2.0</version> -->
+               <classifier>obfuscated-apis</classifier>
+               <scope>provided</scope>
+           </dependency>
+              
+           <dependency>
+               <groupId>org.apache.geronimo.specs</groupId>
+               <artifactId>geronimo-atinject_1.0_spec</artifactId>
+               <version>1.0</version>
+               <scope>provided</scope>
+           </dependency>
+		
+		
             <!-- OSGi Dependencies -->
             <dependency>
                 <groupId>org.osgi</groupId>
@@ -476,27 +482,22 @@
                 <version>1.5.11</version>
                 <scope>provided</scope>
             </dependency>
-            <!-- Adobe AEM Dependencies -->
+            <!-- Apache Sling Dependencies -->
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>uber-jar</artifactId>
-                <version>6.4.7</version>
+                <version>6.2.0</version>
                 <classifier>apis</classifier>
                 <scope>provided</scope>
             </dependency>
-            <dependency>
-                <groupId>com.adobe.cq</groupId>
-                <artifactId>core.wcm.components.all</artifactId>
-                <type>zip</type>
-                <version>2.0.4</version>
-            </dependency>
-            <!-- Apache Sling Dependencies -->
+
             <dependency>
                 <groupId>org.apache.sling</groupId>
                 <artifactId>org.apache.sling.models.api</artifactId>
                 <version>1.0.0</version>
                 <scope>provided</scope>
             </dependency>
+
             <!-- Servlet API -->
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -524,7 +525,6 @@
                 <version>5.7.4</version>
                 <scope>provided</scope>
             </dependency>
-
             <!-- Testing -->
             <dependency>
                 <groupId>junit</groupId>

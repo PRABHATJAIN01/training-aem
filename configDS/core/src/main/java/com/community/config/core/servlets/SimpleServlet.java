@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.training.core.servlets;
+package com.community.config.core.servlets;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -39,7 +39,7 @@ import java.io.IOException;
            property={
                    Constants.SERVICE_DESCRIPTION + "=Simple Demo Servlet",
                    "sling.servlet.methods=" + HttpConstants.METHOD_GET,
-                   "sling.servlet.resourceTypes="+ "training/components/structure/page",
+                   "sling.servlet.resourceTypes="+ "configDS/components/structure/page",
                    "sling.servlet.extensions=" + "txt"
            })
 public class SimpleServlet extends SlingSafeMethodsServlet {
@@ -47,10 +47,10 @@ public class SimpleServlet extends SlingSafeMethodsServlet {
     private static final long serialVersionUid = 1L;
 
     @Override
-    protected void doGet (final SlingHttpServletRequest req,
+    protected void doGet(final SlingHttpServletRequest req,
             final SlingHttpServletResponse resp) throws ServletException, IOException {
         final Resource resource = req.getResource();
-         resp.setContentType("text/plain");
-        resp.getWriter().write("Title  = " + resource.adaptTo(ValueMap.class).get("jcr:title"));
+        resp.setContentType("text/plain");
+        resp.getWriter().write("Title = " + resource.adaptTo(ValueMap.class).get("jcr:title"));
     }
 }

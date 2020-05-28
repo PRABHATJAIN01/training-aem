@@ -42,7 +42,7 @@ import java.io.IOException;
                    "sling.servlet.resourceTypes="+ "training/components/structure/page",
                    "sling.servlet.extensions=" + "txt"
            })
-public class SimpleServlet extends SlingSafeMethodsServlet {
+public class SimpleServlet2 extends SlingSafeMethodsServlet {
 
     private static final long serialVersionUid = 1L;
 
