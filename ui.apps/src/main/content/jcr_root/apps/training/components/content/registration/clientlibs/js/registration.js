@@ -1,5 +1,4 @@
-$(document).ready(function() {
-
+$(document).ready(function(){
 $('#submit').click(function() {
     var failure = function(err) {
              alert("Unable to retrive data "+err);
@@ -15,10 +14,21 @@ $('#submit').click(function() {
 
     document.body.append(hobbies);
 
+
+    $(".error").remove();
+
+    if (firstName.length < 1) {
+      $('#firstname').after('<span class="error">This field is required</span>');
+    }
+    else if (lastName.length < 1) {
+      $('#lastname').after('<span class="error">This field is required</span>');
+    }
+    else{
+
     //Use JQuery AJAX request to post data to a Sling Servlet
     $.ajax({
          type: 'POST',
-         url:'/bin/registerServlet',
+         url:'/bin/registerTrainingServlet',
          data:'firstName='+ firstName+'&lastName='+ lastName+'&hobbies='+ hobbies,
          success: function(msg){
 
@@ -26,6 +36,7 @@ $('#submit').click(function() {
             alert(msg); 
          }
      });
+    }
   });
 
     $('#getAllData').click(function(){
@@ -37,7 +48,7 @@ $('#submit').click(function() {
          //Use JQuery AJAX request to post data to a Sling Servlet
   	     $.ajax({
          type: 'GET',
-         url:'/bin/allRegistrationData',
+         url:'/bin/allRegistrationTrainingData',
          success: function(msg){
 
              for(var i = 0; i < msg.registrationData.length; i++){
@@ -51,7 +62,6 @@ $('#submit').click(function() {
 
          }
      });
-
-
     });
+
 }); // end ready
