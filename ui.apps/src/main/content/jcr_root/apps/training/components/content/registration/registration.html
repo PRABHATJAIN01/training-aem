@@ -18,9 +18,21 @@
           <label for=${hobbiesList}> ${hobbiesList}</label><br>
           </div><br><br>
 
+          <div id="success-div"></div>
           <input type="submit" class="button button1" name="submit" id="submit" value="Submit">
 
           <input type="button" class="button button1" name="getAllData" id="getAllData" value="Get All Data">
     </form>
-           <div id="registration-data"></div>
+
+
+			<div id="registration-div", style="display:none">
+			   <table id="registration-table" border='1' style="width:100%">
+             	  <tr>
+					<th>First Name</th>
+       			    <th>Last Name</th>
+                    <th>Hobbies</th>
+                  </tr>
+                </table>
+            </div>
+
 </div>
