@@ -1,0 +1,21 @@
+<div data-sly-test="${wcmmode.edit}" class="cq-placeholder" data-emptytext="Edit ${component.title}"></div>
+
+<div data-sly-use.countryName="com.training.core.models.CountryModel">
+
+	<div data-sly-test="${countryName.status=='OK'}">
+
+    	Name is: ${countryName.name} </br>
+        Capital is: ${countryName.capital} </br>
+        Demonym is: ${countryName.demonym} </br>
+        Native Name is: ${countryName.nativeName} </br>
+
+      <a
+         role="link"
+         href="${countryName.flag}"
+         target="${countryName.flag}">
+         ${countryName.flag}
+      </a>
+
+    </div>
+
+</div>
