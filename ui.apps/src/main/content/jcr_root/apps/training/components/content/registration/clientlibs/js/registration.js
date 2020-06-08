@@ -18,7 +18,7 @@ $('#submit').click(function() {
     //Use JQuery AJAX request to post data to a Sling Servlet
     $.ajax({
          type: 'POST',
-         url:'/bin/registerServlet',
+         url:'/bin/registerTrainingServlet',
          data:'firstName='+ firstName+'&lastName='+ lastName+'&hobbies='+ hobbies,
          success: function(msg){
 
@@ -37,7 +37,7 @@ $('#submit').click(function() {
          //Use JQuery AJAX request to post data to a Sling Servlet
   	     $.ajax({
          type: 'GET',
-         url:'/bin/allRegistrationData',
+         url:'/bin/allRegistrationTrainingData',
          success: function(msg){
 
              for(var i = 0; i < msg.registrationData.length; i++){
@@ -51,7 +51,6 @@ $('#submit').click(function() {
 
          }
      });
-
 
     });
 }); // end ready

@@ -18,6 +18,7 @@ import javax.jcr.Node;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
 
 @Component(service = Servlet.class,
@@ -76,8 +77,11 @@ public class RegistrationFormServlet extends SlingAllMethodsServlet {
             } else
                 registration = root.getNode("registration");
 
+            Date date = new Date();
+            long timeMilli = date.getTime();
+
             String hobbiesArray[] = new String[]{hobbies};
-            Node name = registration.addNode(firstName + " " + lastName);
+            Node name = registration.addNode(String.valueOf(timeMilli));
             name.setProperty("firstname", firstName);
             name.setProperty("lastname", lastName);
             name.setProperty("hobbies", hobbiesArray);
