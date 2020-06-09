@@ -4,12 +4,15 @@
 <h3> Register Form </h3>
     <p>Please fill up the below form:</p>
     <hr>
-	<form style="margin: 25px 25px 25px 45px;">
+	<form id="registration_form" style="margin: 25px 25px 25px 45px;">
+
           <label for="fname"><b>*First name:</b></label>
-          <input type="text" id="firstname" name="firstname" required><br><br>
+          <input type="text" id="firstname" name="firstname" ><br>
+          <span id="first_name_error" style="color:red"></span><br><br>
 
           <label for="lname"><b>*Last name:</b></label>
-          <input type="text" id="lastname" name="lastname" required><br><br>
+          <input type="text" id="lastname" name="lastname" ><br>
+          <span id="last_name_error" style="color:red"></span><br><br>
 
 		  <label><b>Select Your Hobbies</b></label><br><br>
 
@@ -19,6 +22,7 @@
           </div><br><br>
 
           <div id="success-div"></div>
+
           <input type="submit" class="button button1" name="submit" id="submit" value="Submit">
 
           <input type="button" class="button button1" name="getAllData" id="getAllData" value="Get All Data">

@@ -1,16 +1,22 @@
 $(document).ready(function(){
 
-   document.onkeyup = function() {
+    $("#firstname").on("input", function(){
+       $('#first_name_error').empty();
 
-    $(".error").remove();
+    });
+
+     $("#lastname").on("input", function(){
+       $('#last_name_error').empty();
+
+    });
 
 
-   }
+$('#submit').click(function(e) {
+     e.preventDefault();
 
-$('#submit').click(function() {
     var failure = function(err) {
              alert("Unable to retrive data "+err);
-   };
+    };
 
     //Get the user-defined values
     var firstName= $('#firstname').val() ; 
@@ -18,36 +24,34 @@ $('#submit').click(function() {
 
     var hobbies = $('input[type="checkbox"]:checked').map(function() {
       return $(this).val();
-    }).get().join(',');
 
-    document.body.append(hobbies);
+    }).get().join(',');
 
 
     $(".error").remove();
 
-    if (firstName.length < 1) {
-      $('#firstname').after('<span class="error">This field is required</span>');
-    }
-   else if (lastName.length < 1) {
-      $('#lastname').after('<span class="error">This field is required</span>');
-    }
-    else{
+    if(checkFirstNameError(firstName,lastName)){
 
-    //Use JQuery AJAX request to post data to a Sling Servlet
-    $.ajax({
+	   //Use JQuery AJAX request to post data to a Sling Servlet
+       $.ajax({
          type: 'POST',
          url:'/bin/registerTrainingServlet',
          data:'firstName='+ firstName+'&lastName='+ lastName+'&hobbies='+ hobbies,
          success: function(msg){
 
-        	$('#success-div').empty();
-            $('#success-div').show();
-            $('#success-div').append($('<div>').prop({innerHTML:msg }));
-			$("#success-div").delay(1000).fadeOut(500); 
+			setSuccessDiv(msg);
+
+        	document.getElementById("firstname").value = "";
+        	document.getElementById("lastname").value = "";
+      	    const cbs = document.querySelectorAll('input[name="hobbies"]');
+   				cbs.forEach((cb) => {
+       		 	cb.checked = false;
+   		    });
 
          }
      });
     }
+
   });
 
     $('#getAllData').click(function(){
@@ -63,13 +67,12 @@ $('#submit').click(function() {
          success: function(msg){
 
               var registrationDiv = document.getElementById("registration-div");
-              $('#registration-div').empty();
-              $('#success-div').empty();
-              $('#success-div').show();
-              $('#success-div').append($('<div>').prop({innerHTML:msg.message }));
-			  $("#success-div").delay(1000).fadeOut(500);
 
-             if(msg.registrationData.length>0){
+              $('#registration-div').empty();
+
+              setSuccessDiv(msg.message);
+
+              if(msg.registrationData.length>0){
 
 			     registrationDiv.style.display="block";
                  var table = document.createElement('table');
@@ -118,6 +121,7 @@ $('#submit').click(function() {
                      table.appendChild(tr);
                 }
 
+
                  registrationDiv.appendChild(table);
 
 
@@ -125,5 +129,73 @@ $('#submit').click(function() {
          }
      });
     });
+
+    function checkFirstNameError(firstName,lastName){
+
+        var isFirstNameAllOk=false;
+        var isLastNameAllOk=false;
+        var pattern=/^[a-zA-Z]+$/;
+
+        if (firstName.trim().length < 1) {
+
+            setFirstNameError("This field is required");
+
+
+        }else if(!pattern.test(firstName.trim())){
+            setFirstNameError("Only Character required");
+
+        }else{
+            isFirstNameAllOk=true;
+        }
+
+        isLastNameAllOk=  checkLastNameError(lastName);
+
+
+        return (isFirstNameAllOk && isLastNameAllOk);
+    }
+
+	function checkLastNameError(lastName){
+        var isLastNameAllOk=false;
+        var pattern=/^[a-zA-Z]+$/;
+
+        if (lastName.trim().length < 1) {
+             setLastNameError("This field is required");
+
+
+        }else if(!pattern.test(lastName.trim())){
+             setLastNameError("Only Character required");
+
+        }else{
+			isLastNameAllOk=true;
+        }
+
+
+        return isLastNameAllOk;
+    }
+
+    function setFirstNameError(message){
+
+        $('#first_name_error').empty();
+		$('#first_name_error').show();
+		var span = document.getElementById('first_name_error');
+        span.appendChild( document.createTextNode(message));
+
+    }
+
+	 function setLastNameError(message){
+
+         $('#last_name_error').empty();
+		$('#last_name_error').show();
+		var span = document.getElementById('last_name_error');
+        span.appendChild( document.createTextNode(message));
+
+    }
+
+	function setSuccessDiv(message){
+        $('#success-div').empty();
+        $('#success-div').show();
+        $('#success-div').append($('<div>').prop({innerHTML:message }));
+		$("#success-div").delay(1000).fadeOut(500);
+    }
 
 }); // end ready
