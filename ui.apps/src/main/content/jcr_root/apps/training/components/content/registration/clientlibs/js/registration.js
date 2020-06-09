@@ -11,12 +11,8 @@ $(document).ready(function(){
     });
 
 
-$('#submit').click(function(e) {
+    $('#submit').click(function(e) {
      e.preventDefault();
-
-    var failure = function(err) {
-             alert("Unable to retrive data "+err);
-    };
 
     //Get the user-defined values
     var firstName= $('#firstname').val() ; 
@@ -26,9 +22,6 @@ $('#submit').click(function(e) {
       return $(this).val();
 
     }).get().join(',');
-
-
-    $(".error").remove();
 
     if(checkFirstNameError(firstName,lastName)){
 
@@ -51,14 +44,9 @@ $('#submit').click(function(e) {
          }
      });
     }
-
   });
 
     $('#getAllData').click(function(){
-         var failure = function(err) {
-             alert("Unable to retrive data "+err);
-         }
-
 
          //Use JQuery AJAX request to post data to a Sling Servlet
   	     $.ajax({
@@ -137,9 +125,7 @@ $('#submit').click(function(e) {
         var pattern=/^[a-zA-Z]+$/;
 
         if (firstName.trim().length < 1) {
-
             setFirstNameError("This field is required");
-
 
         }else if(!pattern.test(firstName.trim())){
             setFirstNameError("Only Character required");
@@ -149,7 +135,6 @@ $('#submit').click(function(e) {
         }
 
         isLastNameAllOk=  checkLastNameError(lastName);
-
 
         return (isFirstNameAllOk && isLastNameAllOk);
     }
@@ -161,14 +146,12 @@ $('#submit').click(function(e) {
         if (lastName.trim().length < 1) {
              setLastNameError("This field is required");
 
-
         }else if(!pattern.test(lastName.trim())){
              setLastNameError("Only Character required");
 
         }else{
 			isLastNameAllOk=true;
         }
-
 
         return isLastNameAllOk;
     }
@@ -184,7 +167,7 @@ $('#submit').click(function(e) {
 
 	 function setLastNameError(message){
 
-         $('#last_name_error').empty();
+        $('#last_name_error').empty();
 		$('#last_name_error').show();
 		var span = document.getElementById('last_name_error');
         span.appendChild( document.createTextNode(message));

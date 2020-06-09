@@ -35,7 +35,6 @@ import java.util.List;
 public class GetAllRegistrationDataServlet extends SlingSafeMethodsServlet {
 
     private static final long serialVersionUID = 2L;
-    private static final Logger log = LoggerFactory.getLogger(GetAllRegistrationDataServlet.class);
 
     @Override
     protected void doGet(final SlingHttpServletRequest request,
@@ -99,9 +98,8 @@ public class GetAllRegistrationDataServlet extends SlingSafeMethodsServlet {
                     Value[] values = references.getValues();
                     hobbies = values[0].getString();
                 }else {
-                    hobbies="--";
+                    hobbies="";
                 }
-                log.error("hobbies"+hobbies);
 
                 JSONObject dataJsonObject=new JSONObject();
                 dataJsonObject.put("firstName",node.getProperty("firstname").getString());
@@ -113,7 +111,6 @@ public class GetAllRegistrationDataServlet extends SlingSafeMethodsServlet {
 
             mainJsonObject.put("registrationData", jsonArray);
 
-            log.error("5555" + mainJsonObject.toString());
             PrintWriter out = response.getWriter();
             response.setCharacterEncoding("UTF-8");
             response.setHeader("Content-Type", "application/json");

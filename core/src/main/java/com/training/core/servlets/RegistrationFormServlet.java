@@ -36,7 +36,6 @@ public class RegistrationFormServlet extends SlingAllMethodsServlet {
     @Reference
     private ResourceResolverFactory resolverFactory;
     private static final long serialVersionUID = 1L;
-    private static final Logger log = LoggerFactory.getLogger(RegistrationFormServlet.class);
 
 
     @Override
@@ -55,7 +54,6 @@ public class RegistrationFormServlet extends SlingAllMethodsServlet {
     public void injestCustData(String firstName, String lastName,
                                String hobbies, final SlingHttpServletResponse response, SlingHttpServletRequest request) {
 
-        log.error("hobbies are"+hobbies);
         Node registration;
         try {
 
@@ -95,7 +93,6 @@ public class RegistrationFormServlet extends SlingAllMethodsServlet {
 
             response.getWriter().write("Done");
         } catch (Exception e) {
-            log.error("RepositoryException: " + e);
         }
 
     }
