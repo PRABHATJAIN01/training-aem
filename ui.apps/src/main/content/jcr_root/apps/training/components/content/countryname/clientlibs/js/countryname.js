@@ -12,8 +12,7 @@ $('.txtonly').keypress(function (e) {
 			e.preventDefault();
 			$('#errormsg').show();
             $('#errormsg').empty();
-            //$('.errormsg').text('Please Enter Alphabate');
-			//$('#errormsg').after('<span class="errormsg">Only Characters are allowed!</span>');
+
             var span = document.getElementById('errormsg');
             span.appendChild( document.createTextNode("Only Characters are allowed!"));
 			return false;
@@ -69,15 +68,10 @@ $('#submitCountryName').click(function() {
 
   		    }else{
 
-               // $('#country_data').empty();
-               // $('#country_data').show();
-           		//alert("Please fill up the country field");
-               // $('#country_data').after('<span class="errormsg">This field is required</span>');
-
                 $('#errormsg').empty();
 		        $('#errormsg').show();
 		        var span = document.getElementById('errormsg');
-                span.appendChild( document.createTextNode("This field is required"));
+                span.appendChild( document.createTextNode("Please Enter Valid 3 character Country Code"));
 
             }
         }
