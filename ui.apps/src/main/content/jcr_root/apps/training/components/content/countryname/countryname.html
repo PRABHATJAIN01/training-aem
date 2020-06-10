@@ -1,13 +1,17 @@
-<div >
+<div class="Container">
+  <h3> Simple Form </h3>
+    <p>Please fill up the below form:</p>
+    <hr>
+	<form id="country_form" style="margin: 25px 25px 25px 45px;">
+          <div>
+          <label for="countryName">* Enter Country Name Initials:</label>
+          <p class="error" id="msg"></p>
 
-	<form>
-          <label for="countryName">Country name initials:</label>
-          <input type="text" id="countryName" name="countryName" maxlength="3"><br><br>
+          <input  class="txtonly" type="text" id="countryName" name="countryName" maxlength="3"><br><br>
+          <span id="errormsg" class="errormsg" style="color:red"></span><br>
 
-          <input type="button" name="submitCountryName" id="submitCountryName" value="Submit">
-
-    </form>
-
+          </div>
+          <input type="button" class="button button1" name="submitCountryName" id="submitCountryName" value="Submit">
+     </form>
                <div id="country_data"></div>
-
 </div>

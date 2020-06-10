@@ -1,5 +1,32 @@
 $(document).ready(function() {
 
+
+$('.txtonly').keypress(function (e) {
+			var regex = new RegExp("^[a-zA-Z]+$");
+			var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+			if (regex.test(str)) {
+				return true;
+			}
+			else
+			{
+			e.preventDefault();
+			$('#errormsg').show();
+            $('#errormsg').empty();
+            //$('.errormsg').text('Please Enter Alphabate');
+			//$('#errormsg').after('<span class="errormsg">Only Characters are allowed!</span>');
+            var span = document.getElementById('errormsg');
+            span.appendChild( document.createTextNode("Only Characters are allowed!"));
+			return false;
+			}
+		});
+
+  $("#countryName").on("input", function(){
+       $('#errormsg').empty();
+
+    }); 
+
+
+
 $('#submitCountryName').click(function() {
     var failure = function(err) {
              alert("Unable to retrive data "+err);
@@ -7,6 +34,7 @@ $('#submitCountryName').click(function() {
 
     //Get the user-defined values
     var countryName= $('#countryName').val() ; 
+
 
     //Use JQuery AJAX request to post data to a Sling Servlet
     $.ajax({
@@ -30,20 +58,26 @@ $('#submitCountryName').click(function() {
                   
                 // Append the text node to anchor element. 
                 a.appendChild(link);  
-                  
+
                 // Set the title. 
                 a.title = msg.flag;  
-                  
+
                 // Set the href property. 
                 a.href = msg.flag;  
 
     			$('#country_data').append(a);
 
-
   		    }else{
 
-                $('#country_data').empty();
-           		alert("country initials are not right.");
+               // $('#country_data').empty();
+               // $('#country_data').show();
+           		//alert("Please fill up the country field");
+               // $('#country_data').after('<span class="errormsg">This field is required</span>');
+
+                $('#errormsg').empty();
+		        $('#errormsg').show();
+		        var span = document.getElementById('errormsg');
+                span.appendChild( document.createTextNode("This field is required"));
 
             }
         }
