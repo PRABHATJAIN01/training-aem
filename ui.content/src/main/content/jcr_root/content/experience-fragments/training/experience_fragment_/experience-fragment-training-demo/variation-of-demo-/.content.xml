@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2020-06-15T16:19:01.235+05:30"
+        cq:lastModifiedBy="admin"
+        cq:tags="[]"
+        cq:template="/conf/training/settings/wcm/templates/experience-fragment-training-template"
+        cq:xfVariantType="web"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Variation of demo "
+        sling:resourceType="training/components/structure/xfpage">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+                <footer_copy jcr:primaryType="nt:unstructured"/>
+            </responsivegrid>
+        </root>
+    </jcr:content>
+</jcr:root>
