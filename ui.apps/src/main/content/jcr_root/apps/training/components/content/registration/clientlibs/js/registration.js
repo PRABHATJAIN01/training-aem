@@ -2,8 +2,7 @@ $(document).ready(function() {
 
     $("#firstname").on("input", function(){
        $('#first_name_error').empty();
-    }
-  });
+    });
 
     $("#lastname").on("input", function(){
        $('#last_name_error').empty();
