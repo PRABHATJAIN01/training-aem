@@ -18,6 +18,7 @@ import javax.jcr.Node;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
 
 @Component(service = Servlet.class,
@@ -35,7 +36,6 @@ public class RegistrationFormServlet extends SlingAllMethodsServlet {
     @Reference
     private ResourceResolverFactory resolverFactory;
     private static final long serialVersionUID = 1L;
-    private static final Logger log = LoggerFactory.getLogger(RegistrationFormServlet.class);
 
 
     @Override
@@ -76,17 +76,23 @@ public class RegistrationFormServlet extends SlingAllMethodsServlet {
             } else
                 registration = root.getNode("registration");
 
-            String hobbiesArray[] = new String[]{hobbies};
-            Node name = registration.addNode(firstName + " " + lastName);
+            Date date = new Date();
+            long timeMilli = date.getTime();
+
+
+            Node name = registration.addNode(String.valueOf(timeMilli));
             name.setProperty("firstname", firstName);
             name.setProperty("lastname", lastName);
-            name.setProperty("hobbies", hobbiesArray);
+
+            if (!hobbies.equals("")){
+                String hobbiesArray[] = new String[]{hobbies};
+                name.setProperty("hobbies", hobbiesArray);
+            }
 
             resourceResolver.commit();
 
             response.getWriter().write("Done");
         } catch (Exception e) {
-            log.error("RepositoryException: " + e);
         }
 
     }
