@@ -1,35 +1,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <div class="Container" data-sly-use.hobbies="com.training.core.models.UserHobbies">
-<h3> Register Form </h3>
+    <h3> Register Form </h3>
     <p>Please fill up the below form:</p>
     <hr>
-	<form id="registration_form" style="margin: 25px 25px 25px 45px;">
+    <form id="registration_form" style="margin: 25px 25px 25px 45px;">
 
-          <label for="fname"><b>*First name:</b></label>
-          <input type="text" id="firstname" name="firstname" ><br>
-          <span id="first_name_error" style="color:red"></span><br><br>
+        <label for="fname"><b>*First name:</b></label>
+        <input type="text" id="firstname" name="firstname">
+        <span class="error_field" id="first_name_error"></span>
 
-          <label for="lname"><b>*Last name:</b></label>
-          <input type="text" id="lastname" name="lastname" ><br>
-          <span id="last_name_error" style="color:red"></span><br><br>
+        <label for="lname"><b>*Last name:</b></label>
+        <input type="text" id="lastname" name="lastname">
+        <span class="error_field" id="last_name_error"></span>
+        <div class="hobby_lable"><label><b>Select Your Hobbies</b></label>
+        </div>
 
-		  <label><b>Select Your Hobbies</b></label><br><br>
+        <div class="hobby_list" data-sly-list.hobbiesList="${hobbies.hobbiesList}">
+            <input type="checkbox" name="hobbies" id=${hobbiesList} value=${hobbiesList}>
+            <label for=${hobbiesList}> ${hobbiesList}</label>
+        </div>
 
-          <div data-sly-list.hobbiesList="${hobbies.hobbiesList}">
-          <input type="checkbox" name="hobbies" id=${hobbiesList} value=${hobbiesList}>
-          <label for=${hobbiesList}> ${hobbiesList}</label><br>
-          </div><br><br>
+        <div id="success-div"></div>
+        <input type="submit" class="button buttonhover" name="submit" id="submit" value="Submit">
 
-          <div id="success-div"></div>
+        <input type="button" class="button buttonhover" name="getAllData" id="getAllData" value="Get All Data">
 
-          <input type="submit" class="button button1" name="submit" id="submit" value="Submit">
-
-          <input type="button" class="button button1" name="getAllData" id="getAllData" value="Get All Data">
     </form>
 
-
-			<div id="registration-div", style="display:none">
-
-            </div>
+    <div id="registration-div" style="display:none"></div>
 
 </div>

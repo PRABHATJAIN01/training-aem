@@ -1,8 +1,7 @@
-
-input[type=text]{
+input[type=text] {
   width: 65%;
   padding: 15px;
-  margin: 5px 0 22px 0;
+  margin: 5px 0 12px 0;
   display: inline-block;
   border: none;
   background: #f1f1f1;
@@ -18,9 +17,9 @@ hr {
   margin-bottom: 60px;
 }
 
-.Container{
-
-margin: 25px 25px 25px 45px;}
+.Container {
+  margin: 25px 25px 25px 45px;
+}
 
 .button {
   border: none;
@@ -35,9 +34,9 @@ margin: 25px 25px 25px 45px;}
   cursor: pointer;
 }
 
-.button1 {
-  background-color: white; 
-  color: black; 
+.buttonhover {
+  background-color: white;
+  color: black;
   border: 2px solid #4CAF50;
 }
 
@@ -48,10 +47,24 @@ margin: 25px 25px 25px 45px;}
 
 .error {
   color: red;
-  margin-left: 5px;
+  margin-left: 5px;  
+}
+
+.error_field {
+  color: red;
+  margin-bottom: 20px;
+  display: block;  
 }
 
 label.error {
   display: inline;
 }
 
+.hobby_lable {
+  margin-bottom: 10px;
+}
+
+.hobby_list {
+  margin-bottom: 10px;
+  display: block;
+}

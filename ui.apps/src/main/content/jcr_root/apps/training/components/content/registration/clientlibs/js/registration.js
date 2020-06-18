@@ -1,184 +1,174 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
     $("#firstname").on("input", function(){
        $('#first_name_error').empty();
+    }
+  });
 
-    });
-
-     $("#lastname").on("input", function(){
+    $("#lastname").on("input", function(){
        $('#last_name_error').empty();
-
     });
 
-
-    $('#submit').click(function(e) {
-     e.preventDefault();
+  $('#submit').click(function(e) {
+    e.preventDefault();
 
     //Get the user-defined values
-    var firstName= $('#firstname').val() ; 
-    var lastName= $('#lastname').val() ; 
+    var firstName = $('#firstname').val();
+    var lastName = $('#lastname').val();
 
     var hobbies = $('input[type="checkbox"]:checked').map(function() {
       return $(this).val();
 
     }).get().join(',');
 
-    if(checkFirstNameError(firstName,lastName)){
+    if (checkFirstNameError(firstName, lastName)) {
 
-	   //Use JQuery AJAX request to post data to a Sling Servlet
-       $.ajax({
-         type: 'POST',
-         url:'/bin/registerTrainingServlet',
-         data:'firstName='+ firstName+'&lastName='+ lastName+'&hobbies='+ hobbies,
-         success: function(msg){
+      //Use JQuery AJAX request to post data to a Sling Servlet
+      $.ajax({
+        type: 'POST',
+        url: '/bin/registerTrainingServlet',
+        data: 'firstName=' + firstName + '&lastName=' + lastName + '&hobbies=' + hobbies,
+        success: function(msg) {
 
-			setSuccessDiv(msg);
+          setSuccessDiv(msg);
 
-        	document.getElementById("firstname").value = "";
-        	document.getElementById("lastname").value = "";
-      	    const cbs = document.querySelectorAll('input[name="hobbies"]');
-   				cbs.forEach((cb) => {
-       		 	cb.checked = false;
-   		    });
-
-         }
-     });
+          document.getElementById("firstname").value = "";
+          document.getElementById("lastname").value = "";
+          const cbs = document.querySelectorAll('input[name="hobbies"]');
+          cbs.forEach((cb) => {
+            cb.checked = false;
+          });
+        }
+      });
     }
   });
 
-    $('#getAllData').click(function(){
+  $('#getAllData').click(function() {
+    //Use JQuery AJAX request to post data to a Sling Servlet
+    $.ajax({
+      type: 'GET',
+      url: '/bin/allRegistrationTrainingData',
+      success: function(msg) {
 
-         //Use JQuery AJAX request to post data to a Sling Servlet
-  	     $.ajax({
-         type: 'GET',
-         url:'/bin/allRegistrationTrainingData',
-         success: function(msg){
+        var registrationDiv = document.getElementById("registration-div");
+        $('#registration-div').empty();
 
-              var registrationDiv = document.getElementById("registration-div");
+        setSuccessDiv(msg.message);
 
-              $('#registration-div').empty();
+        if (msg.registrationData.length > 0) {
 
-              setSuccessDiv(msg.message);
+          registrationDiv.style.display = "block";
+          var table = document.createElement('table');
+          table.style.cssText = 'width:100%';
+          table.setAttribute('border', '1');
+          var mainRow = document.createElement('tr');
 
-              if(msg.registrationData.length>0){
+          var th1 = document.createElement('th');
+          var th2 = document.createElement('th');
+          var th3 = document.createElement('th');
 
-			     registrationDiv.style.display="block";
-                 var table = document.createElement('table');
-                 table.style.cssText = 'width:100%';
-                 table.setAttribute('border', '1');
-                 var mainRow = document.createElement('tr');
+          var firstNameHeading = document.createTextNode('First Name');
+          var lastNameHeading = document.createTextNode('Last Name');
+          var hobbiesHeading = document.createTextNode('Hobbies');
 
-                 var th1 = document.createElement('th');
-                 var th2 = document.createElement('th');
-                 var th3 = document.createElement('th');
+          th1.appendChild(firstNameHeading);
+          th2.appendChild(lastNameHeading);
+          th3.appendChild(hobbiesHeading);
 
-                 var firstNameHeading = document.createTextNode('First Name');
-                 var lastNameHeading = document.createTextNode('Last Name');
-                 var hobbiesHeading = document.createTextNode('Hobbies');
+          mainRow.appendChild(th1);
+          mainRow.appendChild(th2);
+          mainRow.appendChild(th3);
 
-                 th1.appendChild(firstNameHeading);
-                 th2.appendChild(lastNameHeading);
-                 th3.appendChild(hobbiesHeading);
+          table.appendChild(mainRow);
 
-                 mainRow.appendChild(th1);
-                 mainRow.appendChild(th2);
-                 mainRow.appendChild(th3);
+          for (var i = 0; i < msg.registrationData.length; i++) {
 
-                 table.appendChild(mainRow);
+            var tr = document.createElement('tr');
 
-                 for(var i = 0; i < msg.registrationData.length; i++){
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            var td3 = document.createElement('td');
 
-                     var tr = document.createElement('tr');
+            var text1 = document.createTextNode(msg.registrationData[i].firstName);
+            var text2 = document.createTextNode(msg.registrationData[i].lastName);
+            var text3 = document.createTextNode(msg.registrationData[i].hobbies);
 
-                     var td1 = document.createElement('td');
-                     var td2 = document.createElement('td');
-                     var td3 = document.createElement('td');
+            td1.appendChild(text1);
+            td2.appendChild(text2);
+            td3.appendChild(text3);
 
-                     var text1 = document.createTextNode(msg.registrationData[i].firstName);
-                     var text2 = document.createTextNode(msg.registrationData[i].lastName);
-                     var text3 = document.createTextNode(msg.registrationData[i].hobbies);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
 
-                     td1.appendChild(text1);
-                     td2.appendChild(text2);
-                     td3.appendChild(text3);
-
-                     tr.appendChild(td1);
-                     tr.appendChild(td2);
-                     tr.appendChild(td3);
-
-                     table.appendChild(tr);
-                }
-
-
-                 registrationDiv.appendChild(table);
-
-
-             }
-         }
-     });
+            table.appendChild(tr);
+          }
+          registrationDiv.appendChild(table);
+        }
+      }
     });
+  });
 
-    function checkFirstNameError(firstName,lastName){
+  function checkFirstNameError(firstName, lastName) {
 
-        var isFirstNameAllOk=false;
-        var isLastNameAllOk=false;
-        var pattern=/^[a-zA-Z]+$/;
+    var isFirstNameAllOk = false;
+    var isLastNameAllOk = false;
+    var pattern = /^[a-zA-Z]+$/;
 
-        if (firstName.trim().length < 1) {
-            setFirstNameError("This field is required");
+    if (firstName.trim().length < 1) {
+      setFirstNameError("This field is required");
 
-        }else if(!pattern.test(firstName.trim())){
-            setFirstNameError("Only Character required");
+    } else if (!pattern.test(firstName.trim())) {
+      setFirstNameError("Only Character required");
 
-        }else{
-            isFirstNameAllOk=true;
-        }
-
-        isLastNameAllOk=  checkLastNameError(lastName);
-
-        return (isFirstNameAllOk && isLastNameAllOk);
+    } else {
+      isFirstNameAllOk = true;
     }
 
-	function checkLastNameError(lastName){
-        var isLastNameAllOk=false;
-        var pattern=/^[a-zA-Z]+$/;
+    isLastNameAllOk = checkLastNameError(lastName);
 
-        if (lastName.trim().length < 1) {
-             setLastNameError("This field is required");
+    return (isFirstNameAllOk && isLastNameAllOk);
+  }
 
-        }else if(!pattern.test(lastName.trim())){
-             setLastNameError("Only Character required");
+  function checkLastNameError(lastName) {
+    var isLastNameAllOk = false;
+    var pattern = /^[a-zA-Z]+$/;
 
-        }else{
-			isLastNameAllOk=true;
-        }
+    if (lastName.trim().length < 1) {
+      setLastNameError("This field is required");
 
-        return isLastNameAllOk;
+    } else if (!pattern.test(lastName.trim())) {
+      setLastNameError("Only Character required");
+
+    } else {
+      isLastNameAllOk = true;
     }
 
-    function setFirstNameError(message){
+    return isLastNameAllOk;
+  }
 
-        $('#first_name_error').empty();
-		$('#first_name_error').show();
-		var span = document.getElementById('first_name_error');
-        span.appendChild( document.createTextNode(message));
+  function setFirstNameError(message) {
 
-    }
+    $('#first_name_error').empty();
+    $('#first_name_error').show();
+    var span = document.getElementById('first_name_error');
+    span.appendChild(document.createTextNode(message));
+  }
 
-	 function setLastNameError(message){
+  function setLastNameError(message) {
 
-        $('#last_name_error').empty();
-		$('#last_name_error').show();
-		var span = document.getElementById('last_name_error');
-        span.appendChild( document.createTextNode(message));
+    $('#last_name_error').empty();
+    $('#last_name_error').show();
+    var span = document.getElementById('last_name_error');
+    span.appendChild(document.createTextNode(message));
+  }
 
-    }
-
-	function setSuccessDiv(message){
-        $('#success-div').empty();
-        $('#success-div').show();
-        $('#success-div').append($('<div>').prop({innerHTML:message }));
-		$("#success-div").delay(1000).fadeOut(500);
-    }
-
+  function setSuccessDiv(message) {
+    $('#success-div').empty();
+    $('#success-div').show();
+    $('#success-div').append($('<div>').prop({
+      innerHTML: message
+    }));
+    $("#success-div").delay(1000).fadeOut(500);
+  }
 }); // end ready
