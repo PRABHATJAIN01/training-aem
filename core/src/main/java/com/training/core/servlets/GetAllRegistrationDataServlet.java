@@ -68,55 +68,19 @@ public class GetAllRegistrationDataServlet extends SlingSafeMethodsServlet {
 
         Node node = resourceResolver.getResource("/content/training/jcr:content/registration").adaptTo(Node.class);
         if (node.hasNodes()) {
-            log.error("111111");
             NodeIterator ni = node.getNodes();
             while (ni.hasNext()) {
 
-                log.error("22222");
-               /* UserRegistrationData userRegistrationData = new UserRegistrationData();
-
-                Property references = ni.nextNode().getProperty("hobbies");
-                log.error("here111");
-                Value[] values = references.getValues();
-                log.error("here222");
-                String hobbies = values[0].getString();
-                log.error("here333");
-                userRegistrationData.setFirstName(ni.nextNode().getProperty("firstname").getString());
-                userRegistrationData.setLastName(ni.nextNode().getProperty("lastname").getString());
-                userRegistrationData.setHobbies(hobbies);
-
-                log.error("3333"+userRegistrationData.getFirstName());*/
                 userRegistrationDataList.add(ni.nextNode());
             }
 
-            for (Node node1:userRegistrationDataList){
-               log.error("***"+ node1.getProperty("firstname").getString());
-            }
             setMessageAndSendResponse("all done", userRegistrationDataList, response);
 
         } else
             setMessageAndSendResponse("no record found", userRegistrationDataList, response);
-
-       /* if (resource != null) {
-            Iterator<Resource> linkResources = resource.listChildren();
-            while (linkResources.hasNext()) {
-                Resource childResource = linkResources.next();
-                UserRegistrationData userRegistrationData = childResource.adaptTo(UserRegistrationData.class);
-                if (userRegistrationData != null) {
-                    log.error("data is not null");
-                    log.error("1111" + userRegistrationData.getFirstName());
-                    userRegistrationDataList.add(userRegistrationData);
-                } else
-                    log.error("data is null");
-            }
-            setMessageAndSendResponse("all done", userRegistrationDataList, userRegistrationMessageAndData, response);
-        }*/
-
     }
 
     private void setMessageAndSendResponse(String message, List<Node> userRegistrationDataList, SlingHttpServletResponse response) throws IOException {
-
-        log.error("4444" + message);
 
         try {
             JSONObject mainJsonObject=new JSONObject();
@@ -140,7 +104,6 @@ public class GetAllRegistrationDataServlet extends SlingSafeMethodsServlet {
 
             mainJsonObject.put("registrationData", jsonArray);
 
-            log.error("5555" + mainJsonObject.toString());
             PrintWriter out = response.getWriter();
             response.setCharacterEncoding("UTF-8");
             response.setHeader("Content-Type", "application/json");
